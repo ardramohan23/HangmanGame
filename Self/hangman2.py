@@ -22,33 +22,38 @@ def complete_guess():
 
 while True:
     guess=input("Enter your guess letter: ").upper()
-    if guess in answer or guess in wrong_guess_lst:
-        print("You already made this guess")
+    if guess.isalpha() and len(guess)==1:
+        if guess in answer or guess in wrong_guess_lst:
+            print("You already made this guess")
 
-    elif guess in name:
-        print("Correct guess")
-        for i,letter in enumerate(name):
-            if letter==guess:
-                answer[i]=guess
-        print("Current progress:", ' '.join(answer))
-        full_guess_possible = input("Are you able to guess the word completely at this stage [Yes/No]:  ").upper()
-        if full_guess_possible == 'YES':
-            value=complete_guess()
-            if value==True:
+        elif guess in name:
+            print("Correct guess")
+            for i, letter in enumerate(name):
+                if letter == guess:
+                    answer[i] = guess
+            print("Current progress:", ' '.join(answer))
+            full_guess_possible = input("Are you able to guess the word completely at this stage [Yes/No]:  ").upper()
+            if full_guess_possible == 'YES':
+                value = complete_guess()
+                if value == True:
+                    break
+
+        else:
+            wrong_guess_lst.append(guess)
+            count += 1
+            print(f"Wrong guess!!!!!!\nYou have {total_guesses - count} chances left")
+            if count == total_guesses:
+                print("You lost the game!!!!!")
+                print("Answer is", name)
                 break
 
-    else:
-        wrong_guess_lst.append(guess)
-        count += 1
-        print(f"Wrong guess!!!!!!\nYou have {total_guesses-count} chances left")
-        if count==total_guesses:
-            print("You lost the game!!!!!")
-            print("Answer is", name)
-            break
+        print('_' * 100)
 
-    if "_" not in answer:
-        print("You Won!!!!!!\nAnswer is",''.join(answer))
-        break
+        if "_" not in answer:
+            print("You Won!!!!!!\nAnswer is", ''.join(answer))
+            break
+    else:
+        print(" WRONG FORMAT!!!!\nEnter a letter")
 
 
 
